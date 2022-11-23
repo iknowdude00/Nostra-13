@@ -1,0 +1,123 @@
+2022-05-03:
+  Putnam3145:
+  - bugfix: Round times are accurate now
+  SandPoot:
+  - bugfix: Actually fixes dragging storage items into themself.
+  timothyteakettle:
+  - rscadd: sodium sensitivity quirk
+2022-05-06:
+  SandPoot:
+  - bugfix: Fixes, maybe?
+  - code_imp: Makes some vars use cooldown defines.
+  - refactor: A bunch of stuff was moved around again and rewritten.
+2022-05-13:
+  Bhijn & Myr:
+  - rscadd: The server's hub tagline now has the option to pull random strings from
+      strings/server_taglines.txt!
+  LiteralMushroom:
+  - rscadd: alter form affects wings
+  - rscadd: Synths get to spark too.
+  Putnam3145:
+  - rscadd: Smelly gases (Bromine, methane, ammonia, nitric oxide and stimulum in
+      particular)
+  - rscadd: Easier-to-make-visible gases; gases made visible with this system are
+      bromine and hydrogen (plus nitryl, but that was already visible in the same
+      way)
+  - bugfix: 'Scrubbers scrub chems properly tweak: Air alarms now show all gases,
+      not just ones they''re hardcoded to show tweak: Contaminated now only removes
+      "dangerous" gases (this is actually a consequence of the hardcode reduction)
+      tweak: Water vapor is now counted as DANGEROUS (this makes it included in "contaminated"
+      and adds admin logging when people open water vapor cans)'
+  SandPoot:
+  - rscadd: Status displays can now be built.
+  - rscadd: AIs can now quickly modify their status displays using an emote (*bsod)!
+  - rscadd: AIs can also modify their status displays by just clicking on the devices
+      (opens a radial wheel)!
+  - refactor: Status displays simply look a lot better now.
+  TomGarou:
+  - rscadd: Added Reprogramming to surgeries via Techweb under Alien surgery and Brainwashing
+      disk
+  - balance: Synths and non Synths can now be brainwashed equally
+  - bugfix: Brainwash surgery not working with synths due to metal heads
+2022-05-17:
+  RanDoomGuy21:
+  - rscadd: cryogenic to dorm
+  - rscadd: added a few things here and there in bar, including a jukebox. i tried.
+  - rscadd: added Action Figures all over DiscStation.
+  - rscadd: added more vendors to every department.
+  - rscadd: put a few things into cargo to sell, very useful.
+  - bugfix: HOPEFULLY fixed the shuttle issue on DiscStation
+  - bugfix: added Pipes to Disc Atmos that were missing.
+  - tweak: changed access on the maintenance doors going from engie hall and departures
+      hall to brig maint, also changed departures bar access to bartender only
+  - tweak: Moth fluff no longer hidden when wearing hardsuits. (i hope)
+  - balance: removed the deagle mags from vault, obvious reasons.
+2022-05-19:
+  RanDoomGuy21:
+  - rscadd: added a emergency toolbox to each arrival shuttle pod
+  - rscadd: added missing lathes to departments
+  - rscadd: added a axes to atmos and bridge
+  - bugfix: added a few missing wires and wired a few wires to the main grid
+  - rscdel: removed some windows in the windowed space maintenance so the doors can
+      close
+2022-05-21:
+  RanDoomGuy21:
+  - rscadd: Added cams to xenobio
+  - rscadd: added a few wires missing
+  - rscadd: added a few buttons to areas so people dont get locked in
+  - rscadd: added forgotten cameras in xenobio and moved a table
+  - rscadd: added a few pipes and fixes the toxins chamber
+  - bugfix: fixed mineral piles across the station
+2022-05-25:
+  RanDoomGuy21:
+  - rscadd: Added a locker with old stuff.
+  - rscdel: Removed the door leading into space in maints, completely useless and
+      made that room its own tiny wall mistery.
+  - tweak: changed the atmos room in arrivals to be atmos only, since you can pretty
+      much sabotage atmos from there.
+  - bugfix: fixed the buttons that didnt close shutters, yay!
+2022-05-28:
+  AnonChangechong:
+  - rscadd: Added two new rooms to Charlie Station.
+  - bugfix: Deletes slipped meteor thingy.
+  RanDoomGuy21:
+  - rscdel: Removed tazer, very sad
+  - rscdel: removed tiny fans in some pod bays
+  - bugfix: fixed solar smes being setup weird
+  - bugfix: fixed shutters
+2022-05-14:
+  Putnam3145:
+  - rscadd: Smelly gases (Bromine, methane, ammonia, nitric oxide and stimulum in
+      particular)
+  - rscadd: Easier-to-make-visible gases; gases made visible with this system are
+      bromine and hydrogen (plus nitryl, but that was already visible in the same
+      way)
+  - bugfix: 'Scrubbers scrub chems properly tweak: Air alarms now show all gases,
+      not just ones they''re hardcoded to show tweak: Contaminated now only removes
+      "dangerous" gases (this is actually a consequence of the hardcode reduction)
+      tweak: Water vapor is now counted as DANGEROUS (this makes it included in "contaminated"
+      and adds admin logging when people open water vapor cans)'
+2022-05-17:
+  timothyteakettle:
+  - rscadd: poly alt cloak can now be renamed/dedescriptioned in loadout
+2022-05-19:
+  BongaTheProto:
+  - admin: Added logging for stepping/trampling on people
+  timothyteakettle:
+  - rscadd: quirks are now organised into three tabs for positive, neutral and negative
+2022-05-21:
+  Bhijn & Myr:
+  - bugfix: Blood trails no longer have a duplicate directionless iconstate as their
+      base sprite, fixing the Wonkiness of blood trails going west/east.
+  SandPoot:
+  - bugfix: Silicon flavor texts are no longer broken... maybe?
+2022-05-23:
+  BongaTheProto:
+  - bugfix: fixes the bug where reagents won't add through view variables if you enter
+      their full path
+2022-05-24:
+  SandPoot:
+  - rscadd: You can now make shuttle seats with titanium.
+2022-05-27:
+  BongaTheProto:
+  - bugfix: fixes extreme and harmful prefs so they're ABLE TO BE SAVED!! FINALLY!!!

@@ -1,0 +1,119 @@
+2022-04-01:
+  Floyd & ActionNinja:
+  - soundadd: Some things now make sounds when picked up, thrown, or dropped.
+2022-04-02:
+  Putnam3145:
+  - bugfix: recycler now emergency stops properly
+  SandPoot:
+  - bugfix: Fixes some diagonal weirdness that might be going on with npcs.
+2022-04-06:
+  SandPoot:
+  - balance: Bluespace miners cannot mine whilst unanchored, as god intended.
+  - bugfix: Tools won't behave weirdly on the bluespace miner, and you can now unanchor
+      it.
+  - code_imp: Made bluespace miner code less shit.
+  - rscadd: Added custom statues. Create carving block from 5 sheets of material then
+      use a chisel on it.
+2022-04-08:
+  AnthurK:
+  - bugfix: Fixes bots trying to path through dense corners.
+  Arturlang:
+  - rscadd: Adds stasis beds and related mechanics
+  - rscdel: Removed mapped in sleepers from station maps. Shuttles have it but centcomm
+      doesn't.
+  SandPoot:
+  - bugfix: Make changelogs actually get added!
+2022-04-09:
+  AnthurK:
+  - bugfix: Fixes bots trying to path through dense corners.
+  Arturlang:
+  - rscadd: Adds stasis beds and related mechanics
+  - rscdel: Removed mapped in sleepers from station maps. Shuttles have it but centcomm
+      doesn't.
+  SandPoot:
+  - bugfix: Medigaxes can actually be built now.
+  - bugfix: The action button for leaving mechs actually works!
+  - bugfix: The medigax no longer uses gygax armor plates to be built!
+  - bugfix: The firefighter ripley is now visible during construction.
+  Solaris-Shade:
+  - bugfix: fixed a few projectile lines
+  - code_imp: changed a large block of the projectile code
+  - refactor: refactored most of the projectile code
+  tiviplus, lolman360, SandPoot:
+  - refactor: /obj/mecha > /obj/vehicle/sealed/mecha
+2022-04-11:
+  SandPoot:
+  - tweak: Tweaks clothing checks to be more precise if something is covering something
+      else.
+  - bugfix: Splits interactions that expected you to only have one genital.
+  - code_imp: Files have been created for labeling reasons.
+2022-04-15:
+  BlueWildrose:
+  - rscadd: Added carcinisoprojection jelly, a limb regrowth chemical made from xenobiology's
+      slime mutation toxin & blood. Don't overdose!
+2022-04-16:
+  Putnam3145:
+  - bugfix: 'Fires are back on Linux tweak: Linux-only: plasma and trit fires work
+      as before'
+  SandPoot:
+  - bugfix: Progressbars no longer stay after completing/failing their task.
+2022-04-17:
+  Putnam3145:
+  - bugfix: 'Fires are back on Linux tweak: Linux-only: plasma and trit fires work
+      as before'
+  SandPoot:
+  - bugfix: Fixes testicle shape saving.
+  - code_imp: Initialize(mapload)
+  - rscadd: Added deadminning preferences (only affects admins).
+  maxspells:
+  - expansion: Surgery steps play sound effects appropriate to the step
+2022-04-21:
+  BongaTheProto:
+  - bugfix: fixes breastfeeding interactions
+  SandPoot:
+  - bugfix: Mobs lacking the vars in GLOB.slots won't create infinite runtimes anymore.
+2022-04-28:
+  Putnam3145:
+  - rscadd: 'Methane-based planetary atmospheres tweak: Advanced fire extinguishers
+      can now remove non-plasma flammable gases'
+  - rscadd: Nitric oxide (NO), with reactions associated
+  - rscadd: A maximum temperature above which all gases break down into quark matter,
+      which will break down into gases again if it goes below that temperature.
+  SandPoot:
+  - rscadd: The stasis beds can now be researched alongside being built.
+  - balance: Maps are now half stasis beds and half sleepers... only in medbay.
+  - bugfix: The stasis bed's examine now works.
+  - refactor: Generally updates stasis bed's code and adds cooldown defines (i learnt
+      how to use them)
+  timothyteakettle:
+  - spellcheck: trashcan quirk now uses correct grammar
+2022-04-23:
+  maksxpl:
+  - rscadd: Added sprites bluespace_extinguisher0 and bluespace_extinguisher1
+  - tweak: tweaked bluespace extinguisher description
+  - bugfix: fixed bluespace extingiuisher going invisible when in active form
+  - bugfix: Fixes the radsuit sprites.
+2022-04-24:
+  Walks-In-Shadows:
+  - rscadd: Sundowners Armor - "I'm fucking invincible!", Comes with a deployable
+      shield!
+  - rscadd: Bloodlust - "I'll split you in two!", a heavy blade able to dish out some
+      wicked damage. Try not to slip or you might be fucked.
+  - rscadd: Jetstream Sams Armor - "Show me a good time Jack!", some light speedy
+      armor so you can really cause some Blood-shed.
+  - rscadd: Murasama - "The only thing I know for real...", able to deflect *most*
+      bullets just as Jetstream Sam can! Doesn't block everything, so your not fucking
+      invincible.
+  - rscadd: Bladewolf Borg Summon, included in the Jetstream Sam Uplink package.
+  - rscadd: Monsoons Armor - Able to manipulate the forces of- **MAGNETIC POWER!!!!**
+  - rscadd: Dystopia - Small blade, that pack a hefty punch when thrown, also return
+      to the user!
+  - rscadd: Bamboo Samurai Armor, available in the crafting menu. Gives Botany more
+      purpose then just Durathread.
+  - rscadd: Carrot Glaive, honestly it's just as stupid as it sounds.
+  - tweak: Origami.dm, no more invisible default airplanes!
+  - imageadd: MGR Suits, Weaponry and Spell Icons.
+  - soundadd: Shield Deploy and Retract SFX's
+2022-04-29:
+  RanDoomGuy21:
+  - rscadd: added disc into rotation

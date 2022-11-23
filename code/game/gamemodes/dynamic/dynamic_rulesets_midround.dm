@@ -46,9 +46,6 @@
 		if(!mode.check_age(M.client, minimum_required_age))
 			trimmed_list.Remove(M)
 			continue
-		if(ROLE_NO_ANTAGONISM in M.client.prefs.be_special)
-			trimmed_list.Remove(M)
-			continue
 		if(antag_flag_override)
 			if(!(HAS_ANTAG_PREF(M.client, antag_flag_override)))
 				trimmed_list.Remove(M)
@@ -88,6 +85,9 @@
 		if (job_check < required_enemies[threat])
 			return FALSE
 	return TRUE
+
+/datum/dynamic_ruleset/midround/from_ghosts/ready(forced = FALSE)
+	return ..() && (length(dead_players) + length(list_observers) >= required_applicants)
 
 /datum/dynamic_ruleset/midround/from_ghosts/execute()
 	var/list/possible_candidates = list()
@@ -241,6 +241,69 @@
 	message_admins("[ADMIN_LOOKUPFLW(M)] was selected by the [name] ruleset and has been made into a midround traitor.")
 	log_game("DYNAMIC: [key_name(M)] was selected by the [name] ruleset and has been made into a midround traitor.")
 	return TRUE
+
+//////////////////////////////////////////////
+//                                          //
+//                 FAMILIES                 //
+//                                          //
+//////////////////////////////////////////////
+
+/datum/dynamic_ruleset/midround/families
+	name = "Family Head Aspirants"
+	persistent = TRUE
+	antag_datum = /datum/antagonist/gang
+	antag_flag = ROLE_FAMILY_HEAD_ASPIRANT
+	antag_flag_override = ROLE_FAMILIES
+	protected_roles = list("Prisoner", "Head of Personnel")
+	restricted_roles = list("AI", "Cyborg", "Prisoner", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Chaplain", "Head of Personnel", "Quartermaster", "Chief Engineer", "Chief Medical Officer", "Research Director")
+	required_candidates = 9
+	weight = 3
+	cost = 15
+	requirements = list(101,101,101,50,30,20,10,10,10,10)
+	flags = HIGH_IMPACT_RULESET
+	blocking_rules = list(/datum/dynamic_ruleset/roundstart/families)
+	/// A reference to the handler that is used to run pre_execute(), execute(), etc..
+	var/datum/gang_handler/handler
+
+/datum/dynamic_ruleset/midround/families/trim_candidates()
+	..()
+	candidates = living_players
+	for(var/mob/living/player in candidates)
+		if(issilicon(player))
+			candidates -= player
+		else if(is_centcom_level(player.z))
+			candidates -= player
+		else if(player.mind && (player.mind.special_role || player.mind.antag_datums?.len > 0))
+			candidates -= player
+		else if(HAS_TRAIT(player, TRAIT_MINDSHIELD))
+			candidates -= player
+
+
+/datum/dynamic_ruleset/midround/families/ready(forced = FALSE)
+	if (required_candidates > living_players.len)
+		return FALSE
+	return ..()
+
+/datum/dynamic_ruleset/midround/families/pre_execute()
+	..()
+	handler = new /datum/gang_handler(candidates,restricted_roles)
+	handler.gang_balance_cap = clamp((indice_pop - 3), 2, 5) // gang_balance_cap by indice_pop: (2,2,2,2,2,3,4,5,5,5)
+	handler.midround_ruleset = TRUE
+	handler.use_dynamic_timing = TRUE
+	return handler.pre_setup_analogue()
+
+/datum/dynamic_ruleset/midround/families/execute()
+	return handler.post_setup_analogue(TRUE)
+
+/datum/dynamic_ruleset/midround/families/clean_up()
+	QDEL_NULL(handler)
+	..()
+
+/datum/dynamic_ruleset/midround/families/rule_process()
+	return handler.process_analogue()
+
+/datum/dynamic_ruleset/midround/families/round_result()
+	return handler.set_round_result_analogue()
 
 //////////////////////////////////////////////
 //                                          //

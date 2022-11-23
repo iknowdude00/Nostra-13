@@ -91,7 +91,7 @@ export const Techweb = (props, context) => {
     <Window
       width={640}
       height={735}>
-      <Window.Content scrollable>
+      <Window.Content overflow="auto">
         {!!locked && (
           <Modal width="15em" align="center" className="Techweb__LockedModal">
             <div><b>Console Locked</b></div>
@@ -117,7 +117,7 @@ export const AppTechweb = (props, context) => {
     <NtosWindow
       width={640}
       height={735}>
-      <NtosWindow.Content scrollable>
+      <NtosWindow.Content overflow="auto">
         {!!locked && (
           <Modal width="15em" align="center" className="Techweb__LockedModal">
             <div><b>Console Locked</b></div>
@@ -721,8 +721,11 @@ const TechNode = (props, context) => {
           <Button
             key={id}
             className={`${design_cache[k].class} Techweb__DesignIcon`}
-            tooltip={design_cache[k].name}
-            tooltipPosition={i % 15 < 7 ? "right" : "left"} />
+            // Uncomment these only when tooltip performance is improved.
+            // Reason for removal: Causes massive performance decreases
+            // tooltip={design_cache[k].name}
+            // tooltipPosition={i % 15 < 7 ? "right" : "left"}
+          />
         ))}
       </Box>
       {required_experiments?.length > 0 && (

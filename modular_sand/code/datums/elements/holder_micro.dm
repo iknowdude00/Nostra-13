@@ -5,10 +5,24 @@
 
 	RegisterSignal(target, COMSIG_CLICK_ALT, .proc/mob_try_pickup_micro, TRUE)
 	RegisterSignal(target, COMSIG_MICRO_PICKUP_FEET, .proc/mob_pickup_micro_feet)
+	RegisterSignal(target, COMSIG_MOB_RESIZED, .proc/on_resize)
 
 /datum/element/mob_holder/micro/Detach(datum/source, force)
 	. = ..()
 	UnregisterSignal(source, COMSIG_MICRO_PICKUP_FEET)
+
+/datum/element/mob_holder/micro/proc/on_resize(mob/living/micro, new_size, old_size)
+	var/obj/item/clothing/head/mob_holder/holder = micro.loc
+	if(istype(holder))
+		var/mob/living/living = get_atom_on_turf(micro.loc, /mob/living)
+		if(living && (abs(get_size(living)/get_size(micro)) < 2.0))
+			living.visible_message(span_warning("\The [living] drops [micro] as [micro.p_they()] grow\s too big to carry."),
+								span_warning("You drop \The [living] as [living.p_they()] grow\s too big to carry."),
+								target=micro,
+								target_message=span_notice("\The [living] drops you as you grow too big to carry."))
+			holder.release()
+		else if(!istype(living)) // Somehow a inside a mob_holder and the mob_holder isn't inside any livings? release.
+			holder.release()
 
 /datum/element/mob_holder/micro/on_examine(mob/living/source, mob/user, list/examine_list)
 	if(ishuman(user) && !istype(source.loc, /obj/item/clothing/head/mob_holder) && (abs(get_size(user)/get_size(source)) >= 2.0))
@@ -27,7 +41,7 @@
 	var/obj/item/clothing/head/mob_holder/micro/holder = new(get_turf(source), source, worn_state, alt_worn, right_hand, left_hand, inv_slots)
 	if(!holder)
 		return
-	user.equip_to_slot(holder, SLOT_SHOES)
+	user.equip_to_slot(holder, ITEM_SLOT_FEET)
 	return
 
 /datum/element/mob_holder/micro/proc/mob_try_pickup_micro(mob/living/carbon/source, mob/living/carbon/user)
@@ -35,34 +49,42 @@
 		return FALSE
 	if(!ishuman(user) || !user.Adjacent(source) || user.incapacitated())
 		return FALSE
+	if(source == user)
+		to_chat(user, "<span class='warning'>You can't pick yourself up.</span>")
+		source.balloon_alert(user, "cannot pick yourself!")
+		return FALSE
 	if(abs(get_size(user)/get_size(source)) < 2.0 )
 		to_chat(user, "<span class='warning'>They're too big to pick up!</span>")
+		source.balloon_alert(user, "too big to pick up!")
 		return FALSE
 	if(user.get_active_held_item())
 		to_chat(user, "<span class='warning'>Your hands are full!</span>")
+		source.balloon_alert(user, "hands are full!")
 		return FALSE
 	if(source.buckled)
 		to_chat(user, "<span class='warning'>[source] is buckled to something!</span>")
-		return FALSE
-	if(source == user)
-		to_chat(user, "<span class='warning'>You can't pick yourself up.</span>")
+		source.balloon_alert(user, "buckled to something!")
 		return FALSE
 	source.visible_message("<span class='warning'>[user] starts picking up [source].</span>", \
 					"<span class='userdanger'>[user] starts picking you up!</span>")
+	source.balloon_alert(user, "picking up")
 	var/p = abs(get_size(source)/get_size(user) * 40) //Scale how fast the pickup will be depending on size difference
 	if(!do_after(user, p, target = source))
 		return FALSE
 
 	if(user.get_active_held_item())
 		to_chat(user, "<span class='warning'>Your hands are full!</span>")
+		source.balloon_alert(user, "hands full!")
 		return FALSE
 	if(source.buckled)
 		to_chat(user, "<span class='warning'>[source] is buckled to something!</span>")
+		source.balloon_alert(user, "buckled!")
 		return FALSE
 
-	source.visible_message("<span class='warning'>[user] picks up [source]!</span>", \
-					"<span class='userdanger'>[user] picks you up!</span>")
-	to_chat(user, "<span class='notice'>You pick [source] up.</span>")
+	source.visible_message("<span class='warning'>[user] picks up [source]!</span>",
+					"<span class='userdanger'>[user] picks you up!</span>",
+					target = user,
+					target_message = "<span class='notice'>You pick [source] up.</span>")
 	source.drop_all_held_items()
 	mob_pickup_micro(source, user)
 	return TRUE

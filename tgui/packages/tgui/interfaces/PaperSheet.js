@@ -5,12 +5,13 @@
  * @author Changes stylemistake
  * @author Changes ThePotato97
  * @author Changes Ghommie
+ * @author Changes Artur_Lang
  * @license MIT
  */
 
 import { classes } from 'common/react';
 import { Component } from 'inferno';
-import marked from 'marked';
+import { marked } from 'marked';
 import { useBackend } from '../backend';
 import { Box, Flex, Tabs, TextArea } from '../components';
 import { Window } from '../layouts';
@@ -127,7 +128,7 @@ const run_marked_default = value => {
         break;
     }
   };
-  return marked(value, {
+  return marked.parse(value, {
     breaks: true,
     smartypants: true,
     smartLists: true,
@@ -676,7 +677,7 @@ export const PaperSheet = (props, context) => {
       height={sizeY || 500}>
       <Window.Content
         backgroundColor={paper_color}
-        scrollable>
+        overflow="auto">
         <Box
           id="page"
           fitted

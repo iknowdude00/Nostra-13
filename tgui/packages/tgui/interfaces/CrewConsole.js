@@ -64,9 +64,8 @@ export const CrewConsole = () => {
     <Window
       title="Crew Monitor"
       width={600}
-      height={600}
-      resizable>
-      <Window.Content scrollable>
+      height={600}>
+      <Window.Content overflow="auto">
         <Section minHeight="540px">
           <CrewTable />
         </Section>

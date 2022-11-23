@@ -14,9 +14,11 @@
 	features["mcolor2"]	= sanitize_hexcolor(features["mcolor2"], 6, FALSE)
 	features["mcolor3"]	= sanitize_hexcolor(features["mcolor3"], 6, FALSE)
 
-	// SKYRAT CHANGE START
-	S["enable_personal_chat_color"]			>> enable_personal_chat_color
+	// Sandstorm changes
+	S["enable_personal_chat_color"]		>> enable_personal_chat_color
 	S["personal_chat_color"]			>> personal_chat_color
+	S["lust_tolerance"] 				>> lust_tolerance
+	S["sexual_potency"]					>> sexual_potency
 
 	S["alt_titles_preferences"]			>> alt_titles_preferences
 	alt_titles_preferences = SANITIZE_LIST(alt_titles_preferences)
@@ -26,17 +28,12 @@
 				if(!(alt_titles_preferences[job.title] in job.alt_titles))
 					alt_titles_preferences.Remove(job.title)
 
-	erppref = sanitize_text(S["erp_pref"], "Ask")
-	if(!length(erppref)) erppref = "Ask"
-	nonconpref = sanitize_text(S["noncon_pref"], "Ask")
-	if(!length(nonconpref)) nonconpref = "Ask"
-	vorepref = sanitize_text(S["vore_pref"], "Ask")
-	if(!length(vorepref)) vorepref = "Ask"
-	extremepref = sanitize_text(S["extremepref"], "No") //god has forsaken me
-	if(!length(extremepref))
-		extremepref = "No"
-	extremeharm = sanitize_text(S["extremeharm"], "No")
-	if(!length(extremeharm) || (extremepref = "No"))
+	erppref = sanitize_inlist(S["erp_pref"], GLOB.lewd_prefs_choices, "Ask")
+	nonconpref = sanitize_inlist(S["noncon_pref"], GLOB.lewd_prefs_choices, "Ask")
+	vorepref = sanitize_inlist(S["vore_pref"], GLOB.lewd_prefs_choices, "Ask")
+	extremepref = sanitize_inlist(S["extreme_pref"], GLOB.lewd_prefs_choices, "No") //god has forsaken me
+	extremeharm = sanitize_inlist(S["extreme_harm"], (GLOB.lewd_prefs_choices - "Ask"), "No") //hacky for not saving "Ask"
+	if(extremepref == "No")
 		extremeharm = "No"
 	enable_personal_chat_color	= sanitize_integer(enable_personal_chat_color, 0, 1, initial(enable_personal_chat_color))
 	personal_chat_color	= sanitize_hexcolor(personal_chat_color, 6, 1, "#FFFFFF")
@@ -63,14 +60,14 @@
 	WRITE_FILE(S["feature_xeno_head"], features["xenohead"])
 	//flavor text
 	WRITE_FILE(S["feature_flavor_text"], features["flavor_text"])
-	WRITE_FILE(S["silicon_feature_flavor_text"], features["silicon_flavor_text"])
+	WRITE_FILE(S["feature_silicon_flavor_text"], features["silicon_flavor_text"])
 
 	//sandstorm stuff
 	WRITE_FILE(S["erp_pref"], erppref)
 	WRITE_FILE(S["noncon_pref"], nonconpref)
 	WRITE_FILE(S["vore_pref"], vorepref)
-	WRITE_FILE(S["extremepref"], extremepref)
-	WRITE_FILE(S["extremeharm"], extremeharm)
+	WRITE_FILE(S["extreme_pref"], extremepref)
+	WRITE_FILE(S["extreme_harm"], extremeharm)
 	WRITE_FILE(S["enable_personal_chat_color"], enable_personal_chat_color)
 	WRITE_FILE(S["personal_chat_color"], personal_chat_color)
 	WRITE_FILE(S["alt_titles_preferences"], alt_titles_preferences)

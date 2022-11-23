@@ -24,8 +24,10 @@
 	languagewhitelist = list("Calcic") //Skyrat change - species language whitelist
 
 	species_category = SPECIES_CATEGORY_SKELETON
+	wings_icons = SPECIES_WINGS_SKELETAL
 
 	ass_image = 'icons/ass/assplasma.png'
+	blacklisted_quirks = list(/datum/quirk/paper_skin)
 
 /datum/species/plasmaman/spec_life(mob/living/carbon/human/H)
 	var/datum/gas_mixture/environment = H.loc.return_air()

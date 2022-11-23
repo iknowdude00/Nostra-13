@@ -6,7 +6,7 @@
 	density = TRUE
 	max_integrity = 200
 	integrity_failure = 0.25
-	armor = list("melee" = 20, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 60)
+	armor = list(MELEE = 20, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 70, ACID = 60)
 
 	var/icon_door = null
 	var/icon_door_override = FALSE //override to have open overlay use icon different to its base's
@@ -110,10 +110,10 @@
 	if(HAS_TRAIT(user, TRAIT_SKITTISH))
 		. += "<span class='notice'>If you bump into [p_them()] while running, you will jump inside.</span>"
 
-/obj/structure/closet/CanPass(atom/movable/mover, turf/target)
+/obj/structure/closet/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
 	if(wall_mounted)
 		return TRUE
-	return !density
 
 /obj/structure/closet/proc/can_open(mob/living/user, force = FALSE)
 	if(force)
@@ -156,9 +156,10 @@
 	for(var/atom/movable/AM in L)
 		if(AM != src && insert(AM) == -1) // limit reached
 			break
-	// for(var/i in reverseRange(L.GetAllContents()))
-	// 	var/atom/movable/thing = i
-	// 	SEND_SIGNAL(thing, COMSIG_TRY_STORAGE_HIDE_ALL)
+	// todo: this should be unnecessary, storage should auto close on move wtf
+	for(var/i in reverseRange(L.GetAllContents()))
+		var/atom/movable/thing = i
+		SEND_SIGNAL(thing, COMSIG_TRY_STORAGE_HIDE_ALL)
 
 /obj/structure/closet/proc/open(mob/living/user, force = FALSE)
 	if(!can_open(user, force))
@@ -531,7 +532,7 @@
 
 /obj/structure/closet/get_remote_view_fullscreens(mob/user)
 	if(user.stat == DEAD || !(user.sight & (SEEOBJS|SEEMOBS)))
-		user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/impaired, 1)
+		user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/scaled/impaired, 1)
 
 /obj/structure/closet/emp_act(severity)
 	. = ..()

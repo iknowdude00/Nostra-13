@@ -23,6 +23,8 @@
 	var/icon_icon = 'icons/mob/actions.dmi' //This is the file for the ACTION icon
 	var/button_icon_state = "default" //And this is the state for the action icon
 	var/mob/owner
+	///List of all mobs that are viewing our action button -> A unique movable for them to view.
+	var/list/viewers = list()
 
 /datum/action/New(Target)
 	link_to(Target)
@@ -121,6 +123,11 @@
 			return FALSE
 	return TRUE
 
+/datum/action/proc/UpdateButtons(status_only, force)
+	for(var/datum/hud/hud in viewers)
+		var/atom/movable/screen/movable/button = viewers[hud]
+		UpdateButtonIcon(button, status_only, force)
+
 /datum/action/proc/UpdateButtonIcon(status_only = FALSE, force = FALSE)
 	if(!button)
 		return
@@ -217,6 +224,8 @@
 	name = "Toggle Hood"
 
 /datum/action/item_action/toggle_firemode
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon_state = "fireselect_no"
 	name = "Toggle Firemode"
 
 /datum/action/item_action/rcl_col
@@ -516,7 +525,7 @@
 			H.attack_self(owner)
 			return
 	var/obj/item/I = target
-	if(owner.can_equip(I, SLOT_HANDS))
+	if(owner.can_equip(I, ITEM_SLOT_HANDS))
 		owner.temporarilyRemoveItemFromInventory(I)
 		owner.put_in_hands(I)
 		I.attack_self(owner)

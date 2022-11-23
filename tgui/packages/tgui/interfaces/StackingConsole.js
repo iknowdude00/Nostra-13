@@ -1,4 +1,3 @@
-import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Button, LabeledList, NoticeBox, Section } from '../components';
 import { Window } from '../layouts';
@@ -11,9 +10,8 @@ export const StackingConsole = (props, context) => {
   return (
     <Window
       width={320}
-      height={340}
-      resizable>
-      <Window.Content scrollable>
+      height={340}>
+      <Window.Content overflow="auto">
         {!machine ? (
           <NoticeBox>
             No connected stacking machine
@@ -33,7 +31,7 @@ export const StackingConsoleContent = (props, context) => {
     contents = [],
   } = data;
   return (
-    <Fragment>
+    <>
       <Section>
         <LabeledList>
           <LabeledList.Item label="Stacking Amount">
@@ -66,6 +64,6 @@ export const StackingConsoleContent = (props, context) => {
           </LabeledList>
         )}
       </Section>
-    </Fragment>
+    </>
   );
 };

@@ -9,7 +9,7 @@
 	var/obj/item/seeds/seed = null // type path, gets converted to item on New(). It's safe to assume it's always a seed item.
 	var/tastes = list("indescribable" = 1) //Stops runtimes. Grown are un-eatable anyways so if you do then its a bug
 
-/obj/item/grown/Initialize(newloc, obj/item/seeds/new_seed)
+/obj/item/grown/Initialize(mapload, obj/item/seeds/new_seed)
 	. = ..()
 	create_reagents(50, NONE, HARVEST_REAGENTS_VALUE)
 
@@ -25,7 +25,7 @@
 
 	if(seed)
 		for(var/datum/plant_gene/trait/T in seed.genes)
-			T.on_new(src, newloc)
+			T.on_new(src, loc)
 
 		if(istype(src, seed.product)) // no adding reagents if it is just a trash item
 			seed.prepare_result(src)
@@ -36,11 +36,10 @@
 /obj/item/grown/attackby(obj/item/O, mob/user, params)
 	..()
 	if (istype(O, /obj/item/plant_analyzer))
-		var/msg = "<div class='infobox'><span class='info'>This is [icon2html(src, user)] \a <span class='name'>[src]</span>\n"
+		var/msg = "This is [icon2html(src, user)] \a <span class='name'>[src]</span>\n"
 		if(seed)
 			msg += seed.get_analyzer_text()
-		msg += "</span></div>"
-		to_chat(usr, msg)
+		to_chat(usr, examine_block(span_info(msg)))
 		return
 
 /obj/item/grown/proc/add_juice()

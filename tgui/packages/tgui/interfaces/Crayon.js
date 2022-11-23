@@ -16,9 +16,8 @@ export const Crayon = (props, context) => {
   return (
     <Window
       width={600}
-      height={600}
-      resizable>
-      <Window.Content scrollable>
+      height={600}>
+      <Window.Content overflow="auto">
         {!!capOrChanges && (
           <Section title="Basic">
             <LabeledList>

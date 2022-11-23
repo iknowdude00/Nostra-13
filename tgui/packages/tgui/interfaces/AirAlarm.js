@@ -12,9 +12,8 @@ export const AirAlarm = (props, context) => {
   return (
     <Window
       width={440}
-      height={650}
-      resizable>
-      <Window.Content scrollable>
+      height={650}>
+      <Window.Content overflow="auto">
         <InterfaceLockNoticeBox />
         <AirAlarmStatus />
         {!locked && (
@@ -48,7 +47,7 @@ const AirAlarmStatus = (props, context) => {
     <Section title="Air Status">
       <LabeledList>
         {entries.length > 0 && (
-          <Fragment>
+          <>
             {entries.map(entry => {
               const status = dangerMap[entry.danger_level] || dangerMap[0];
               return (
@@ -72,7 +71,7 @@ const AirAlarmStatus = (props, context) => {
                 || data.fire_alarm && 'Fire Alarm'
                 || 'Nominal'}
             </LabeledList.Item>
-          </Fragment>
+          </>
         ) || (
           <LabeledList.Item
             label="Warning"
@@ -145,7 +144,7 @@ const AirAlarmControlHome = (props, context) => {
     atmos_alarm,
   } = data;
   return (
-    <Fragment>
+    <>
       <Button
         icon={atmos_alarm
           ? 'exclamation-triangle'
@@ -183,7 +182,7 @@ const AirAlarmControlHome = (props, context) => {
         icon="chart-bar"
         content="Alarm Thresholds"
         onClick={() => setScreen('thresholds')} />
-    </Fragment>
+    </>
   );
 };
 

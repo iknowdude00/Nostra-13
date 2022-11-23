@@ -11,8 +11,8 @@ export const Microscope = (props, context) => {
     viruses = [],
   } = data;
   return (
-    <Window resizable>
-      <Window.Content scrollable>
+    <Window>
+      <Window.Content overflow="auto">
         <Section>
           <LabeledList>
             <LabeledList.Item label="Dish Sample">

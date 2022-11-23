@@ -16,9 +16,8 @@ export const ForbiddenLore = (props, context) => {
   return (
     <Window
       width={500}
-      height={900}
-      resizable>
-      <Window.Content scrollable>
+      height={900}>
+      <Window.Content overflow="auto">
         <Section title="Research Eldritch Knowledge">
           Charges left : {charges}
           <br />
@@ -41,7 +40,7 @@ export const ForbiddenLore = (props, context) => {
                       cost: knowledge.cost,
                     })} />
                   {' '}
-                  Cost : {knowledge.cost}  
+                  Cost : {knowledge.cost}
                   | Sacrifices Required : {knowledge.sacs}
                 </Box >
                 <Box italic my={1}>

@@ -5,7 +5,10 @@
 	permeability_coefficient = 0.9
 	block_priority = BLOCK_PRIORITY_UNIFORM
 	slot_flags = ITEM_SLOT_ICLOTHING
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0, "wound" = 5)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0, WOUND = 5)
+	equip_sound = 'sound/items/equip/jumpsuit_equip.ogg'
+	drop_sound = 'sound/items/handling/cloth_drop.ogg'
+	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
 	mutantrace_variation = STYLE_DIGITIGRADE|USE_TAUR_CLIP_MASK
 	limb_integrity = 120
 	var/fitted = FEMALE_UNIFORM_FULL // For use in alternate clothing styles for women
@@ -19,11 +22,12 @@
 	var/adjusted = NORMAL_STYLE
 	var/alt_covers_chest = FALSE // for adjusted/rolled-down jumpsuits, FALSE = exposes chest and arms, TRUE = exposes arms only
 	var/dummy_thick = FALSE // is able to hold accessories on its item
-	//SKYRAT EDIT - Removed the old attached accessory system. We use a list of accessories instead.
-	var/list/obj/item/clothing/accessory/attached_accessories = list()
+	//SANDSTORM EDIT - Removed the old attached accessory system. We use a list of accessories instead.
 	var/max_accessories = 3
-	//SKYRAT EDIT END
-	var/mutable_appearance/accessory_overlay
+	var/list/obj/item/clothing/accessory/attached_accessories = list()
+	var/list/mutable_appearance/accessory_overlays = list()
+	var/is_skirt = FALSE
+	//SANDSTORM EDIT END
 
 /obj/item/clothing/under/worn_overlays(isinhands = FALSE, icon_file, used_state, style_flags = NONE)
 	. = ..()
@@ -32,9 +36,9 @@
 	if(damaged_clothes)
 		. += mutable_appearance('icons/effects/item_damage.dmi', "damageduniform")
 	if(blood_DNA)
-		. += mutable_appearance('icons/effects/blood.dmi', "uniformblood", color = blood_DNA_to_color())
-	if(accessory_overlay)
-		. += accessory_overlay
+		. += mutable_appearance('icons/effects/blood.dmi', "uniformblood", color = blood_DNA_to_color(), blend_mode = blood_DNA_to_blend())
+	if(length(accessory_overlays))
+		. += accessory_overlays
 
 /obj/item/clothing/under/attackby(obj/item/I, mob/user, params)
 	if((sensordamage || (has_sensor < HAS_SENSORS && has_sensor != NO_SENSORS)) && istype(I, /obj/item/stack/cable_coil))
@@ -117,24 +121,24 @@
 		if(!alt_covers_chest)
 			body_parts_covered |= CHEST
 
-	//SKYRAT EDIT
+	// Sandstorm edit
 	for(var/obj/item/clothing/accessory/attached_accessory in attached_accessories)
-		if(attached_accessory && slot != SLOT_HANDS && ishuman(user))
+		if(attached_accessory && slot != ITEM_SLOT_HANDS && ishuman(user))
 			var/mob/living/carbon/human/H = user
 			attached_accessory.on_uniform_equip(src, user)
 			if(attached_accessory.above_suit)
 				H.update_inv_wear_suit()
-	//SKYRAT EDIT END
+	//
 
 /obj/item/clothing/under/dropped(mob/user)
-	//SKYRAT EDIT
+	// Sandstorm edit
 	for(var/obj/item/clothing/accessory/attached_accessory in attached_accessories)
 		attached_accessory.on_uniform_dropped(src, user)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if(attached_accessory.above_suit)
 				H.update_inv_wear_suit()
-	//SKYRAT EDIT END
+	//
 	..()
 
 /obj/item/clothing/under/proc/attach_accessory(obj/item/I, mob/user, notifyAttach = 1)
@@ -161,14 +165,18 @@
 			if((flags_inv & HIDEACCESSORY) || (A.flags_inv & HIDEACCESSORY))
 				return TRUE
 
-			//SKYRAT EDIT
-			accessory_overlay = mutable_appearance('icons/mob/clothing/accessories.dmi', "blank")
+			//SANDSTORM EDIT
+			accessory_overlays = list(mutable_appearance('icons/mob/clothing/accessories.dmi', "blank"))
 			for(var/obj/item/clothing/accessory/attached_accessory in attached_accessories)
-				var/mutable_appearance/Y = mutable_appearance(attached_accessory.mob_overlay_icon, attached_accessory.icon_state, ABOVE_HUD_LAYER)
-				Y.alpha = attached_accessory.alpha
-				Y.color = attached_accessory.color
-				accessory_overlay.add_overlay(Y)
-			//SKYRAT EDIT END
+				var/datum/element/polychromic/polychromic = LAZYACCESS(attached_accessory.comp_lookup, "item_worn_overlays")
+				if(!polychromic)
+					var/mutable_appearance/accessory_overlay = mutable_appearance(attached_accessory.mob_overlay_icon, attached_accessory.item_state || attached_accessory.icon_state, ABOVE_HUD_LAYER)
+					accessory_overlay.alpha = attached_accessory.alpha
+					accessory_overlay.color = attached_accessory.color
+					accessory_overlays += accessory_overlay
+				else
+					polychromic.apply_worn_overlays(attached_accessory, FALSE, attached_accessory.mob_overlay_icon, attached_accessory.item_state || attached_accessory.icon_state, NONE, accessory_overlays)
+			//SANDSTORM EDIT END
 
 			if(ishuman(loc))
 				var/mob/living/carbon/human/H = loc

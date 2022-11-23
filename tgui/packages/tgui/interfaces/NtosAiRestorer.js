@@ -5,9 +5,8 @@ export const NtosAiRestorer = () => {
   return (
     <NtosWindow
       width={370}
-      height={400}
-      resizable>
-      <NtosWindow.Content scrollable>
+      height={400}>
+      <NtosWindow.Content overflow="auto">
         <AiRestorerContent />
       </NtosWindow.Content>
     </NtosWindow>

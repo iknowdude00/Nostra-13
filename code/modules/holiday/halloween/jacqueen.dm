@@ -61,7 +61,7 @@
 		/atom/movable/screen
 	))
 
-/mob/living/simple_animal/jacq/Initialize()
+/mob/living/simple_animal/jacq/Initialize(mapload)
 	. = ..() //fuck you jacq, return a hint you shit
 	cached_z = z
 	poof()
@@ -70,7 +70,7 @@
 	. = ..()
 	AddComponent(/datum/component/stationloving)
 
-/mob/living/simple_animal/jacq/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/jacq/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	if(!ckey)
@@ -154,7 +154,7 @@
 		pop_areas += A
 
 	var/list/targets = list()
-	for(var/H in GLOB.network_holopads)
+	for(var/H in GLOB.the_station_areas)
 		var/area/A = get_area(H)
 		if(!A || findtextEx(A.name, "AI") || !(A in pop_areas) || !is_station_level(H))
 			continue
@@ -432,7 +432,7 @@
 				var/obj/item/W = C.head
 				C.dropItemToGround(W, TRUE)
 			var/jaqc_latern = new /obj/item/clothing/head/hardhat/pumpkinhead/jaqc
-			C.equip_to_slot(jaqc_latern, SLOT_HEAD, 1, 1)
+			C.equip_to_slot(jaqc_latern, ITEM_SLOT_HEAD, 1, 1)
 		if(4)
 			visible_message("<b>[src]</b> waves their arms around, <span class='spooky'>\"In your body there's something amiss, you'll find it's a chem made by my sis!\"</span>")
 			jacqrunes("In your body there's something amiss, you'll find it's a chem made by my sis!", C)
@@ -449,7 +449,7 @@
 				var/obj/item/W = H.wear_suit
 				H.dropItemToGround(W, TRUE)
 			var/ghost = new /obj/item/clothing/suit/ghost_sheet/sticky
-			H.equip_to_slot(ghost, SLOT_WEAR_SUIT, 1, 1)
+			H.equip_to_slot(ghost, ITEM_SLOT_OCLOTHING, 1, 1)
 	poof()
 
 //Blame Fel
@@ -664,13 +664,13 @@
 	hat_type = "pumpkin_j"
 	brightness_on = 4
 
-/obj/item/clothing/head/hardhat/pumpkinhead/jaqc/Initialize()
+/obj/item/clothing/head/hardhat/pumpkinhead/jaqc/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, GLUED_ITEM_TRAIT)
 
 /obj/item/clothing/suit/ghost_sheet/sticky
 
-/obj/item/clothing/suit/ghost_sheet/sticky/Initialize()
+/obj/item/clothing/suit/ghost_sheet/sticky/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, GLUED_ITEM_TRAIT)
 
@@ -723,7 +723,7 @@
 	icon_state = "jacq_potion"
 	desc = "A potion with a strange concoction within. Be careful, as if it's thrown it explodes in a puff of smoke like Jacqueline."
 
-/obj/item/reagent_containers/potion_container/Initialize()
+/obj/item/reagent_containers/potion_container/Initialize(mapload)
 	.=..()
 	var/R = get_random_reagent_id()
 	reagents.add_reagent(R, 30)
@@ -748,6 +748,6 @@
 	icon_state = "jacq_candy"
 	desc = "A candy with strange magic within. Be careful, as the magic isn't always helpful."
 
-/obj/item/reagent_containers/food/snacks/special_candy/Initialize()
+/obj/item/reagent_containers/food/snacks/special_candy/Initialize(mapload)
 	.=..()
 	reagents.add_reagent(get_random_reagent_id(), 5)

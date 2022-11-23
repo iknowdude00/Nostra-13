@@ -106,7 +106,7 @@
 	/// sigh
 	var/unelectrify_timerid
 
-/obj/machinery/door/airlock/Initialize()
+/obj/machinery/door/airlock/Initialize(mapload)
 	. = ..()
 	wires = new wiretypepath(src) //CIT CHANGE - makes it possible for airlocks to have different wire datums
 	if(frequency)
@@ -1278,8 +1278,8 @@
 			assemblytype = /obj/structure/door_assembly/door_assembly_extmai
 	update_icon()
 
-/obj/machinery/door/airlock/CanAStarPass(obj/item/card/id/ID)
-//Airlock is passable if it is open (!density), bot has access, and is not bolted shut or powered off)
+/obj/machinery/door/airlock/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller)
+	//Airlock is passable if it is open (!density), bot has access, and is not bolted shut or powered off)
 	return !density || (check_access(ID) && !locked && hasPower())
 
 /obj/machinery/door/airlock/emag_act(mob/user)
@@ -1357,6 +1357,7 @@
 /obj/machinery/door/airlock/proc/remove_electrify()
 	secondsElectrified = NOT_ELECTRIFIED
 	unelectrify_timerid = null
+	diag_hud_set_electrified()
 
 /obj/machinery/door/airlock/proc/set_electrified(seconds, mob/user)
 	secondsElectrified = seconds

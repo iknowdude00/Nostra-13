@@ -51,10 +51,9 @@ export const CameraConsole = (props, context) => {
   return (
     <Window
       width={870}
-      height={708}
-      resizable>
+      height={708}>
       <div className="CameraConsole__left">
-        <Window.Content scrollable>
+        <Window.Content overflow="auto">
           <CameraConsoleContent />
         </Window.Content>
       </div>

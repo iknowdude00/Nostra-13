@@ -77,7 +77,7 @@
 #define PATH_POWERCOIL /obj/machinery/power/tesla_coil/power
 #define PATH_RPCOIL /obj/machinery/power/tesla_coil/research
 
-/obj/item/circuitboard/machine/tesla_coil/Initialize()
+/obj/item/circuitboard/machine/tesla_coil/Initialize(mapload)
 	. = ..()
 	if(build_path)
 		build_path = PATH_POWERCOIL
@@ -347,7 +347,7 @@
 #define PATH_FREEZER /obj/machinery/atmospherics/components/unary/thermomachine/freezer
 #define PATH_HEATER  /obj/machinery/atmospherics/components/unary/thermomachine/heater
 
-/obj/item/circuitboard/machine/thermomachine/Initialize()
+/obj/item/circuitboard/machine/thermomachine/Initialize(mapload)
 	. = ..()
 	if(!build_path)
 		if(prob(50))
@@ -685,15 +685,15 @@
 		/obj/item/stack/sheet/glass = 1,
 		/obj/item/vending_refill/donksoft = 1)
 
-// /obj/item/circuitboard/machine/bountypad
-// 	name = "Civilian Bounty Pad (Machine Board)"
-// 	icon_state = "generic"
-// 	build_path = /obj/machinery/piratepad/civilian
-// 	req_components = list(
-// 		/obj/item/stock_parts/card_reader = 1,
-// 		/obj/item/stock_parts/scanning_module = 1,
-// 		/obj/item/stock_parts/micro_laser = 1
-// 	)
+
+/obj/item/circuitboard/machine/bountypad
+	name = "Civilian Bounty Pad (Machine Board)"
+	icon_state = "generic"
+	build_path = /obj/machinery/piratepad/civilian
+	req_components = list(
+		/obj/item/stock_parts/scanning_module = 1,
+		/obj/item/stock_parts/micro_laser = 1
+	)
 
 // /obj/item/circuitboard/machine/accounting
 // 	name = "Account Registration Device (Machine Board)"
@@ -920,14 +920,14 @@
 		/obj/item/stock_parts/cell = 1)
 	needs_anchored = FALSE
 
-// /obj/item/circuitboard/machine/stasis
-// 	name = "\improper Lifeform Stasis Unit (Machine Board)"
-// 	icon_state = "medical"
-// 	build_path = /obj/machinery/stasis
-// 	req_components = list(
-// 		/obj/item/stack/cable_coil = 3,
-// 		/obj/item/stock_parts/manipulator = 1,
-// 		/obj/item/stock_parts/capacitor = 1)
+/obj/item/circuitboard/machine/stasis
+	name = "\improper Lifeform Stasis Unit (Machine Board)"
+	icon_state = "medical"
+	build_path = /obj/machinery/stasis
+	req_components = list(
+		/obj/item/stack/cable_coil = 3,
+		/obj/item/stock_parts/manipulator = 1,
+		/obj/item/stock_parts/capacitor = 1)
 
 /obj/item/circuitboard/machine/medipen_refiller
 	name = "Medipen Refiller (Machine Board)"

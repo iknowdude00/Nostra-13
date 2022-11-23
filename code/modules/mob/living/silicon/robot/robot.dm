@@ -4,6 +4,7 @@
 	icon = 'icons/mob/robots.dmi'
 	icon_state = "robot"
 	bubble_icon = "robot"
+	var/obj/item/pda/ai/aiPDA
 
 /mob/living/silicon/robot/get_cell()
 	return cell
@@ -26,6 +27,12 @@
 	inv1 = new /atom/movable/screen/robot/module1()
 	inv2 = new /atom/movable/screen/robot/module2()
 	inv3 = new /atom/movable/screen/robot/module3()
+
+	if(!shell)
+		aiPDA = new/obj/item/pda/ai(src)
+		aiPDA.owner = real_name
+		aiPDA.ownjob = "Cyborg"
+		aiPDA.name = real_name + " (" + aiPDA.ownjob + ")"
 
 	previous_health = health
 
@@ -731,7 +738,7 @@
 /mob/living/silicon/robot/modules
 	var/set_module = /obj/item/robot_module
 
-/mob/living/silicon/robot/modules/Initialize()
+/mob/living/silicon/robot/modules/Initialize(mapload)
 	. = ..()
 	module.transform_to(set_module)
 
@@ -772,7 +779,7 @@
 	cell = /obj/item/stock_parts/cell/hyper
 	// radio = /obj/item/radio/borg/syndicate
 
-/mob/living/silicon/robot/modules/syndicate/Initialize()
+/mob/living/silicon/robot/modules/syndicate/Initialize(mapload)
 	. = ..()
 	radio = new /obj/item/radio/borg/syndicate(src)
 	laws = new /datum/ai_laws/syndicate_override()
@@ -968,6 +975,9 @@
 		notify_ai(RENAME, oldname, newname)
 	if(!QDELETED(builtInCamera))
 		builtInCamera.c_tag = real_name
+	if(aiPDA && !shell)
+		aiPDA.owner = newname
+		aiPDA.name = newname + " (" + aiPDA.ownjob + ")"
 	custom_name = newname
 
 

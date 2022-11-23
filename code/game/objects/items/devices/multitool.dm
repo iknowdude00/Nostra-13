@@ -25,6 +25,8 @@
 	throwforce = 0
 	throw_range = 7
 	throw_speed = 3
+	drop_sound = 'sound/items/handling/multitool_drop.ogg'
+	pickup_sound = 'sound/items/handling/multitool_pickup.ogg'
 	custom_materials = list(/datum/material/iron=50, /datum/material/glass=20)
 	buffer = null // simple machine buffer for device linkage
 	toolspeed = 1
@@ -45,7 +47,7 @@
 	throwforce = 10
 	obj_flags = UNIQUE_RENAME
 
-/obj/item/multitool/chaplain/Initialize()
+/obj/item/multitool/chaplain/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, null, null, FALSE)
 
@@ -130,7 +132,7 @@
 	var/mob/camera/aiEye/remote/ai_detector/eye
 	var/datum/action/item_action/toggle_multitool/toggle_action
 
-/obj/item/multitool/ai_detect/Initialize()
+/obj/item/multitool/ai_detect/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 	eye = new /mob/camera/aiEye/remote/ai_detector()

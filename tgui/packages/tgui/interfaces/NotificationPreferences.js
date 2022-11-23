@@ -20,9 +20,8 @@ export const NotificationPreferences = (props, context) => {
     <Window
       title="Notification Preferences"
       width={270}
-      height={360}
-      resizable>
-      <Window.Content scrollable>
+      height={360}>
+      <Window.Content overflow="auto">
         <Section title="Ghost Role Notifications">
           {ignores.map(ignore => (
             <Button

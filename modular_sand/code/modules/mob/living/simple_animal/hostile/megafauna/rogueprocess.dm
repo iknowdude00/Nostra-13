@@ -29,7 +29,6 @@
 	anger_modifier = 0
 	footstep_type = FOOTSTEP_MOB_HEAVY
 	mob_biotypes = MOB_ROBOTIC
-	songs = list("2930" = sound(file = 'modular_sand/sound/ambience/mbrsystemshock.ogg', repeat = 0, wait = 0, volume = 70, channel = CHANNEL_BOSSMUSIC)) //System shock theme remix by Master Boot Record
 	var/special = FALSE
 	wander = FALSE
 	faction = list("mining", "boss")
@@ -51,7 +50,7 @@
 	range = 21
 	color = "#FF0000"
 
-/mob/living/simple_animal/hostile/megafauna/rogueprocess/Initialize()
+/mob/living/simple_animal/hostile/megafauna/rogueprocess/Initialize(mapload)
 	. = ..()
 	internal = new /obj/item/gps/internal/rogueprocess(src)
 
